@@ -45,9 +45,7 @@ static void init_joysticks(struct joysticks *joys)
 }
 
 
-#ifdef _WIN32
 bool g_enable_xinput = true;
-#endif
 
 static void fatal(const char *msg)
 {

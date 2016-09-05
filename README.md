@@ -15,7 +15,7 @@ InveSTICKgator uses [Premake5](https://premake.github.io/download.html) generate
 
 ### Linux ###
 
-    apt-get install libgl1-mesa-dev x11proto-core-dev libx11-dev
+    apt-get install libgl1-mesa-dev x11proto-core-dev libx11-dev libglu1-mesa-dev
 
 
 # Copyright and Credit #

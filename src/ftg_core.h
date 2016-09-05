@@ -2026,13 +2026,12 @@ ftg_alloc_console(void)
     for (i = 0; i < 3; i++)
         FTG_ASSERT(!ftg__io[i]);
 #endif
+    FTG_UNUSED(i);
     
     ftg__io[0] = freopen("conin$","r",stdin);
     ftg__io[1] = freopen("conout$","w",stdout);
     ftg__io[2] = freopen("conout$","w",stderr);    
 #endif
-
-    FTG_UNUSED(i);
 }
 
 FTGDEF void
