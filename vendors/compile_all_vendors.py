@@ -34,6 +34,7 @@ def compile_vendor( vendor, cli ):
     except subprocess.CalledProcessError as e:
         raise vendor_build.BuildError( 'compile_vendor( %s ) returned %i ' % 
                                     (vendor, e.returncode ) )
+        sys.exit(1)
     os.chdir('..')
 
 
