@@ -7,6 +7,7 @@ import vendor_build
     
 vendors = [
 'SDL2',
+'glew',
 ]
 
 def compile_vendor( vendor, cli ):
