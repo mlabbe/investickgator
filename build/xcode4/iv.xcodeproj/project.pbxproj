@@ -10,6 +10,7 @@
 		0D78529C5F0D8CA97C3350DC /* investickgator.c in Sources */ = {isa = PBXBuildFile; fileRef = D385C604110A55719707BC44 /* investickgator.c */; };
 		2A7DAC6A138D61F7A3680AAA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0E03F2F3581EDFA5F35A32 /* AudioToolbox.framework */; };
 		713678D8302BCBA56C9CE718 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BACC98075FC99AD0DBC2FC0 /* IOKit.framework */; };
+		840EA602D5A3E00FF2C9A442 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19352E0A56B9BD77DCB7244A /* OpenGL.framework */; };
 		89BBB74E9189871B22CC658E /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FAF1596FEAEC2C374E0BBD6 /* CoreAudio.framework */; };
 		9223EFD899F1BFA52B349E18 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 606C44803F6BF1ADB59DEAC0 /* CoreVideo.framework */; };
 		925A5022E3EF8A2F01154E62 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E13C62ADB9855976195BC6A /* Carbon.framework */; };
@@ -23,6 +24,7 @@
 		00300B9759F6902481D729D7 /* iv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iv.app; path = iv.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		073D8906F849CCF30E6C1F46 /* ftg_core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ftg_core.h; path = ../../src/ftg_core.h; sourceTree = "<group>"; };
 		0BACC98075FC99AD0DBC2FC0 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		19352E0A56B9BD77DCB7244A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		1FAF1596FEAEC2C374E0BBD6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		2F51513E96E2F82BED6DA77E /* libs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = libs.c; path = ../../src/libs.c; sourceTree = "<group>"; };
 		32BAA3AF20D120BC667B61EF /* ivbuildinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ivbuildinfo.h; path = ../../src/config/ivbuildinfo.h; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 				F8E8DBA2B7DE2E6FF44F49E2 /* Cocoa.framework in Frameworks */,
 				9223EFD899F1BFA52B349E18 /* CoreVideo.framework in Frameworks */,
 				A57C6F40114FBC0D02775D80 /* ForceFeedback.framework in Frameworks */,
+				840EA602D5A3E00FF2C9A442 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +89,7 @@
 				8D6BC6AAF7BB96D78F7B2CEA /* Cocoa.framework */,
 				606C44803F6BF1ADB59DEAC0 /* CoreVideo.framework */,
 				35C0FD6835FD8795FC54E3A8 /* ForceFeedback.framework */,
+				19352E0A56B9BD77DCB7244A /* OpenGL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

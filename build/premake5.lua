@@ -107,6 +107,7 @@ workspace "Investickgator"
              "Cocoa.framework",
              "CoreVideo.framework",
              "ForceFeedback.framework",
+             "OpenGL.framework",
              "iconv"}
 
 

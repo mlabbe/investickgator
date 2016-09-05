@@ -22,7 +22,7 @@ ifeq ($(config),debug_x64)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g --std=gnu99
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -fno-exceptions -fno-rtti
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lSDL2 -framework AudioToolbox -framework AudioUnit -framework CoreAudio -framework IOKit -framework Carbon -framework Cocoa -framework CoreVideo -framework ForceFeedback -liconv -lGLEW
+  LIBS += -lSDL2 -framework AudioToolbox -framework AudioUnit -framework CoreAudio -framework IOKit -framework Carbon -framework Cocoa -framework CoreVideo -framework ForceFeedback -framework OpenGL -liconv -lGLEW
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -L../../vendors/lib/x64 -L../../vendors/lib -m64
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -52,7 +52,7 @@ ifeq ($(config),release_x64)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 --std=gnu99
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -fno-exceptions -fno-rtti
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lSDL2 -framework AudioToolbox -framework AudioUnit -framework CoreAudio -framework IOKit -framework Carbon -framework Cocoa -framework CoreVideo -framework ForceFeedback -liconv -lGLEW
+  LIBS += -lSDL2 -framework AudioToolbox -framework AudioUnit -framework CoreAudio -framework IOKit -framework Carbon -framework Cocoa -framework CoreVideo -framework ForceFeedback -framework OpenGL -liconv -lGLEW
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -L../../vendors/lib/x64 -L../../vendors/lib -m64 -Wl,-x
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
