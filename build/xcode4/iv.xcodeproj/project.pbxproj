@@ -1,0 +1,315 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0D78529C5F0D8CA97C3350DC /* investickgator.c in Sources */ = {isa = PBXBuildFile; fileRef = D385C604110A55719707BC44 /* investickgator.c */; };
+		2A7DAC6A138D61F7A3680AAA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E0E03F2F3581EDFA5F35A32 /* AudioToolbox.framework */; };
+		713678D8302BCBA56C9CE718 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BACC98075FC99AD0DBC2FC0 /* IOKit.framework */; };
+		89BBB74E9189871B22CC658E /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FAF1596FEAEC2C374E0BBD6 /* CoreAudio.framework */; };
+		9223EFD899F1BFA52B349E18 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 606C44803F6BF1ADB59DEAC0 /* CoreVideo.framework */; };
+		925A5022E3EF8A2F01154E62 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E13C62ADB9855976195BC6A /* Carbon.framework */; };
+		A57C6F40114FBC0D02775D80 /* ForceFeedback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C0FD6835FD8795FC54E3A8 /* ForceFeedback.framework */; };
+		C577BC76D80C7E03B2791AB6 /* libs.c in Sources */ = {isa = PBXBuildFile; fileRef = 2F51513E96E2F82BED6DA77E /* libs.c */; };
+		CAC18D7CD28F5D4963D23BBC /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E7F5DE46D7F0B11E3B10424 /* AudioUnit.framework */; };
+		F8E8DBA2B7DE2E6FF44F49E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D6BC6AAF7BB96D78F7B2CEA /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		00300B9759F6902481D729D7 /* iv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = iv.app; path = iv.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		073D8906F849CCF30E6C1F46 /* ftg_core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ftg_core.h; path = ../../src/ftg_core.h; sourceTree = "<group>"; };
+		0BACC98075FC99AD0DBC2FC0 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		1FAF1596FEAEC2C374E0BBD6 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		2F51513E96E2F82BED6DA77E /* libs.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = libs.c; path = ../../src/libs.c; sourceTree = "<group>"; };
+		32BAA3AF20D120BC667B61EF /* ivbuildinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ivbuildinfo.h; path = ../../src/config/ivbuildinfo.h; sourceTree = "<group>"; };
+		35C0FD6835FD8795FC54E3A8 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = System/Library/Frameworks/ForceFeedback.framework; sourceTree = SDKROOT; };
+		606C44803F6BF1ADB59DEAC0 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		6E0E03F2F3581EDFA5F35A32 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8D6BC6AAF7BB96D78F7B2CEA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		8E7F5DE46D7F0B11E3B10424 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		9E13C62ADB9855976195BC6A /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		AE74E1E36DA9D930B913F023 /* ivconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ivconfig.h; path = ../../src/config/ivconfig.h; sourceTree = "<group>"; };
+		C4B8523016B98A9D2FA38870 /* ui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ui.h; path = ../../src/ui.h; sourceTree = "<group>"; };
+		D385C604110A55719707BC44 /* investickgator.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = investickgator.c; path = ../../src/investickgator.c; sourceTree = "<group>"; };
+		E20E51A0A14348EDECAD5FE0 /* nuklear.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = nuklear.h; path = ../../src/3rdparty/nuklear.h; sourceTree = "<group>"; };
+		F3F0F5EEFFBCE73BFD64842E /* nuklear_sdl_gl3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = nuklear_sdl_gl3.h; path = ../../src/3rdparty/nuklear_sdl_gl3.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4C95CD87DEBE139414E7CBC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A7DAC6A138D61F7A3680AAA /* AudioToolbox.framework in Frameworks */,
+				CAC18D7CD28F5D4963D23BBC /* AudioUnit.framework in Frameworks */,
+				89BBB74E9189871B22CC658E /* CoreAudio.framework in Frameworks */,
+				713678D8302BCBA56C9CE718 /* IOKit.framework in Frameworks */,
+				925A5022E3EF8A2F01154E62 /* Carbon.framework in Frameworks */,
+				F8E8DBA2B7DE2E6FF44F49E2 /* Cocoa.framework in Frameworks */,
+				9223EFD899F1BFA52B349E18 /* CoreVideo.framework in Frameworks */,
+				A57C6F40114FBC0D02775D80 /* ForceFeedback.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		833AD674EACC7D6141572CB4 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				32BAA3AF20D120BC667B61EF /* ivbuildinfo.h */,
+				AE74E1E36DA9D930B913F023 /* ivconfig.h */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		A6C936B4B32D40A1EA134CF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00300B9759F6902481D729D7 /* iv.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BBF767817185A0AEFA200DC1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E0E03F2F3581EDFA5F35A32 /* AudioToolbox.framework */,
+				8E7F5DE46D7F0B11E3B10424 /* AudioUnit.framework */,
+				1FAF1596FEAEC2C374E0BBD6 /* CoreAudio.framework */,
+				0BACC98075FC99AD0DBC2FC0 /* IOKit.framework */,
+				9E13C62ADB9855976195BC6A /* Carbon.framework */,
+				8D6BC6AAF7BB96D78F7B2CEA /* Cocoa.framework */,
+				606C44803F6BF1ADB59DEAC0 /* CoreVideo.framework */,
+				35C0FD6835FD8795FC54E3A8 /* ForceFeedback.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2A9887A675EDDE75786FEBA /* 3rdparty */ = {
+			isa = PBXGroup;
+			children = (
+				E20E51A0A14348EDECAD5FE0 /* nuklear.h */,
+				F3F0F5EEFFBCE73BFD64842E /* nuklear_sdl_gl3.h */,
+			);
+			name = 3rdparty;
+			sourceTree = "<group>";
+		};
+		F009F6DF811C530CD4105D1F /* iv */ = {
+			isa = PBXGroup;
+			children = (
+				D2A9887A675EDDE75786FEBA /* 3rdparty */,
+				833AD674EACC7D6141572CB4 /* config */,
+				073D8906F849CCF30E6C1F46 /* ftg_core.h */,
+				D385C604110A55719707BC44 /* investickgator.c */,
+				2F51513E96E2F82BED6DA77E /* libs.c */,
+				C4B8523016B98A9D2FA38870 /* ui.h */,
+				BBF767817185A0AEFA200DC1 /* Frameworks */,
+				A6C936B4B32D40A1EA134CF4 /* Products */,
+			);
+			name = iv;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ACC94C9D145AF38A6AE5A2DD /* iv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AD115E6CCF95BF303231426 /* Build configuration list for PBXNativeTarget "iv" */;
+			buildPhases = (
+				BC7D4E274EA5943484CF4C67 /* Resources */,
+				262A677EB852AD8BEE7C65BE /* Sources */,
+				4C95CD87DEBE139414E7CBC7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iv;
+			productInstallPath = "$(HOME)/Applications";
+			productName = iv;
+			productReference = 00300B9759F6902481D729D7 /* iv.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "iv" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = F009F6DF811C530CD4105D1F /* iv */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ACC94C9D145AF38A6AE5A2DD /* iv.app */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BC7D4E274EA5943484CF4C67 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		262A677EB852AD8BEE7C65BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D78529C5F0D8CA97C3350DC /* investickgator.c in Sources */,
+				C577BC76D80C7E03B2791AB6 /* libs.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5F3F33AC71D3F5394C4091EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = bin/Debug/x64;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = iv_d;
+			};
+			name = Debug;
+		};
+		6DF0924ED545F11B712E008E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					_DEBUG,
+					"FINAL_RELEASE=0",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../vendors/include,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					../../vendors/lib/x64,
+					../../vendors/lib,
+				);
+				OBJROOT = obj/x64/Debug;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"--std=gnu99",
+				);
+				OTHER_LDFLAGS = (
+					"-lSDL2",
+					"-liconv",
+					"-lGLEW",
+				);
+				SYMROOT = bin/Debug/x64;
+				USER_HEADER_SEARCH_PATHS = (
+					../../src/config,
+				);
+			};
+			name = Debug;
+		};
+		729DE9A67D694273A56FD7E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CONFIGURATION_BUILD_DIR = bin/Release/x64;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "\"$(HOME)/Applications\"";
+				PRODUCT_NAME = iv;
+			};
+			name = Release;
+		};
+		A0C6380832EE7E1569183648 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"FINAL_RELEASE=0",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../../vendors/include,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					../../vendors/lib/x64,
+					../../vendors/lib,
+				);
+				OBJROOT = obj/x64/Release;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"--std=gnu99",
+				);
+				OTHER_LDFLAGS = (
+					"-lSDL2",
+					"-liconv",
+					"-lGLEW",
+				);
+				SYMROOT = bin/Release/x64;
+				USER_HEADER_SEARCH_PATHS = (
+					../../src/config,
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "iv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DF0924ED545F11B712E008E /* Debug */,
+				A0C6380832EE7E1569183648 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3AD115E6CCF95BF303231426 /* Build configuration list for PBXNativeTarget "iv.app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F3F33AC71D3F5394C4091EC /* Debug */,
+				729DE9A67D694273A56FD7E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+};
+rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
