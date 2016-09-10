@@ -21,7 +21,10 @@ if __name__ == '__main__':
         Win32Icon.add_std_icons(iv_def, options,
                                 main_icon='{app}/investickgator.ico',
                                 support_url_file='{app}/investickgator.url')
+
+    elif options['target_platform'] == 'darwin':
+        iv_def.app_icon_filename = 'investickgator.icns'
         
-    db = build_all(iv_def, options)
+    build_all(iv_def, options)
     sys.exit(0)
         

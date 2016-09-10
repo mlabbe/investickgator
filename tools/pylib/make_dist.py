@@ -11,6 +11,7 @@ This module packages up a built Native Project Standards project into
 installers, bundles or zip files for distribution.
 """
 
+import re
 import sys
 import time
 import copy
@@ -20,6 +21,8 @@ import os.path
 import argparse
 import tempfile
 import subprocess
+
+from apple_bundle import AppleBundle
 from os.path import join as path_join
 
 _VALID_ARCHS = ('x86', 'x64')
@@ -94,6 +97,9 @@ class AppDefinition:
     help_url:    a url users can use to get help
     exe_name:    name of release executable without extension
     version_str: a string denoting the version
+    publisher_name: Company name
+    app_icon_filename: Filename (not path) for Apple bundle .icns files
+    w32icons:    A list of Win32Icons
     """
     def __init__(self):
         self.name = None
@@ -101,6 +107,7 @@ class AppDefinition:
         self.exe_name = None
         self.version_str = None
         self.publisher_name = ""
+        self.app_icon_filename = None
         self.w32icons = []
 
     def add_icon(self, w32_icon):
@@ -110,58 +117,49 @@ class AppDefinition:
         self.w32icons.append(w32_icon)
 
 def build_all(app_def, options):
+    """run through all of the build steps for the platform"""
     with tempfile.TemporaryDirectory(suffix='_make_dist') as tmp_dir:
-        build_dir = path_join(tmp_dir, 'build')
-        os.mkdir(build_dir)
-
-        copy_exe(app_def,
-                 options['target_arch'],
-                 build_dir)
-        copy_dlls(app_def,
-                  options['target_arch'],
-                  build_dir,
-                  dist_dir=None)
-        copy_insert(app_def, build_dir)
-
-        make_innosetup_installer(app_def,
-                                 options['target_arch'],
-                                 options['output_dir'],
-                                 tmp_dir)
-        
-
-        
-class DistBuilder_deprecated:
-    """
-    for common apps configurations, build everything in a temp directory.
-    """
-    def __init__(self, app_def, options):
-        self.app_def = app_def
-        self.options = options
-        
-    def build_all(self):
-        with tempfile.TemporaryDirectory(suffix='_make_dist') as tmp_dir:
+        if options['target_platform'] == 'win32':
             build_dir = path_join(tmp_dir, 'build')
             os.mkdir(build_dir)
 
-            print("**copying files")
-            copy_exe(self.app_def,
-                     self.options['target_arch'],
+            copy_exe(app_def,
+                     options['target_arch'],
                      build_dir)
-            copy_dlls(self.app_def,
-                      self.options['target_arch'],
+            copy_dlls(app_def,
+                      options['target_arch'],
                       build_dir,
                       dist_dir=None)
-            copy_insert(self.app_def, build_dir)
+            copy_insert(app_def, build_dir)
 
-            print("**running installer")
-            make_innosetup_installer(self.app_def,
-                                     self.options['target_arch'],
-                                     self.options['output_dir'],
+            make_innosetup_installer(app_def,
+                                     options['target_arch'],
+                                     options['output_dir'],
                                      tmp_dir)
-            input("press enter\n")
 
+        elif options['target_platform'] == 'darwin':
+            script_path = _get_script_path()            
+            exe_src_path = path_join(script_path, '..',
+                                     'build', 'gmake_macosx', 'bin',
+                                     'Release', options['target_arch'],
+                                     app_def.exe_name)
+            tmp_icon = '/Users/mlabbe/Desktop/icon.icns'
 
+            # fixme: this does not copy dlls
+            ab = AppleBundle(app_def.name, exe_src_path, \
+                             tmp_icon, app_def.version_str)
+            ab.write(tmp_dir)
 
+            build_dmg(app_def,
+                      tmp_dir,
+                      options['output_dir'])
+
+            input("waiting\n"+tmp_dir)
+            # todo:
+            # - icon_src_path does not exist (files, inserts )
+            # - add that and then run and test this
+            # - copy dlls into generated bundle (probably specify DLLs in constructor)
+        
 class Win32Icon:
     def __init__(self, name, filename, icon_filename):
         """
@@ -290,14 +288,17 @@ class Win32Icon:
         self.args[arg] = _swap_slashes(value)
 
         
-def _get_installer_filename(app_name, target_arch, version_str):
+def _get_installer_filename(app_name, target_arch, version_str, include_bits):
     bits = 32
     if target_arch == 'x64':
         bits = 64
 
     # always apprend 'pre' -- the idea is that a real human has to remove
     # the prerelease tag when it is time to launch
-    return  "%s%s-%s-pre" % (app_name, bits, version_str)
+    if include_bits:
+        return  "%s%s-%s-pre" % (app_name, bits, version_str)
+    else:
+        return "%s-%s-pre" % (app_name, version_str)
 
 
 def copy_exe(app_def, target_arch, build_dir):
@@ -398,7 +399,8 @@ def make_innosetup_installer(app_def,
     # installer path
     installer_filename = _get_installer_filename(app_def.name, \
                                                  target_arch, \
-                                                 app_def.version_str)
+                                                 app_def.version_str,
+                                                 include_bits=True)
         
     # create temp innosetup input file        
     tmpl = _innosetup_template(app_def, insert_dir, target_arch,\
@@ -410,12 +412,52 @@ def make_innosetup_installer(app_def,
         f.write(tmpl)
         
     cmd = [innosetup_exe, '/O'+output_dir, setup_iss]
-    print(' '.join(cmd))
-    po = subprocess.Popen(cmd)
-    po.wait()
-    if po.returncode != 0:
-        print("last command errored with returncode %d" % po.returncode)
-        sys.exit(1)
+    _run_cmd(cmd)
+
+def build_dmg(app_def, tmp_dir, output_dmg_dir):
+    """
+    Build a dmg containing an app bundle at tmp_dir.
+    """
+    dmg_filename = _get_installer_filename(app_def.name,
+                                           'x64',
+                                           app_def.version_str,
+                                           include_bits=False) + '.dmg'
+    dmg_path = path_join(tmp_dir, dmg_filename)
+
+    # create writeable disk image
+    cmd = ['hdiutil', 'create', '-megabytes', '400', dmg_path, '-layout', 'NONE']
+    _run_cmd(cmd)
+
+    # mount the image, get the device name
+    cmd = ['hdid', '-nomount', dmg_path]
+    result = _run_cmd(cmd, get_stdout=True)
+    device_name = result.readline().decode("utf-8").rstrip()
+
+    # format the mounted disk as hfs+ volume
+    _run_cmd(['newfs_hfs', '-v', app_def.name, device_name])
+
+    # unmount the formatted disk
+    _run_cmd(['hdiutil', 'eject', device_name])
+
+    # mount image as editable
+    result = _run_cmd(['hdid', dmg_path], get_stdout=True)
+    result = result.readline().decode("utf-8").rstrip()
+    (device_name, volume_name) = re.split('\s\s+', result)
+
+    # copy app bundle to mounted volume
+    bundle_dir = glob.glob(path_join(tmp_dir, "*.app"))[0]
+    app_bundle_path = path_join(tmp_dir, bundle_dir)
+    _run_cmd(['cp', '-rv', bundle_dir, volume_name])
+
+    # unmount the rw volume
+    _run_cmd(['hdiutil', 'eject', device_name])
+
+    # Compress and make read-only
+    if not os.path.exists(output_dmg_dir):
+        os.makedirs(output_dmg_dir)    
+    _run_cmd(['hdiutil', 'convert', '-format', 'UDZO', dmg_path,
+              '-o', path_join(output_dmg_dir, dmg_filename)])
+    
 
 def _get_script_path():    
     return os.path.dirname(os.path.realpath(sys.argv[0]))
@@ -452,7 +494,8 @@ def _copyintotree(src, dst, symlinks=False, ignore=None):
         if os.path.isdir(s):
             _copyintotree(s, d, symlinks, ignore)
         else:
-            if not os.path.exists(d) or os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
+            if not os.path.exists(d) or \
+               os.stat(s).st_mtime - os.stat(d).st_mtime > 1:
                 shutil.copy2(s, d)
 
     
@@ -518,3 +561,19 @@ Filename: "{app}\\bin\\%(arch_dir)s\\%(exe_name)s"; Description: "{cm:LaunchProg
 def _arch_dir(target_arch):
     plat = sys.platform
     return "%s_%s" % (plat, target_arch)
+
+
+def _run_cmd(cmd, get_stdout=False):
+    if get_stdout:
+        stdout_arg = subprocess.PIPE
+    else:
+        stdout_arg = None
+    
+    print(' '.join(cmd))
+    po = subprocess.Popen(cmd, stdout=stdout_arg)
+    po.wait()
+    if po.returncode != 0:
+        print("%s failed with returncode %d" % \
+              (' '.join(cmd), po.returncode))
+        sys.exit(1)
+    return po.stdout
