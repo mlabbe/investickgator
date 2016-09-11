@@ -124,8 +124,9 @@ def build_all(app_def, options):
             os.mkdir(build_dir)
 
             copy_exe(app_def,
-                     options['target_arch'],
-                     build_dir)
+                     options,
+                     build_dir,
+                     'vs2015')
             copy_dlls(app_def,
                       options['target_arch'],
                       build_dir,
@@ -170,6 +171,25 @@ def build_all(app_def, options):
             build_dmg(app_def,
                       tmp_dir,
                       options['output_dir'])
+
+        elif options['target_platform'] == 'linux':
+            archive_dir = app_def.name.lower() + '-' + app_def.version_str
+            archive_path = path_join(tmp_dir, archive_dir)
+            os.makedirs(archive_path)
+            
+            copy_exe(app_def,
+                     options,
+                     archive_path,
+                     'gmake_linux')
+            # fixme: this does not copy dlls
+            copy_insert(app_def,
+                        archive_path)
+
+            build_tgz(app_def,
+                      tmp_dir,
+                      options['output_dir'],
+                      options['target_arch'])
+
 
         
 class Win32Icon:
@@ -313,16 +333,20 @@ def _get_installer_filename(app_name, target_arch, version_str, include_bits):
         return "%s-%s-pre" % (app_name, version_str)
 
 
-def copy_exe(app_def, target_arch, build_dir):
+def copy_exe(app_def, options, dst_build_dir, src_build_folder):
     """
-    copy the exe for the target_arch to the proper subdirectory in build_dir
+    copy the exe for the target_arch to the proper subdirectory in dst_build_dir
+
+    src_build_folder: the folder name in /build for the target platform
     """
     script_path = _get_script_path()
-    src_path = path_join(script_path, '..',  \
-                         'build', 'vs2015', 'bin', 'Release', target_arch, \
-                         app_def.exe_name)
+    target_arch = options['target_arch']
 
-    dst_path = path_join(build_dir, 'bin', _arch_dir(target_arch))
+    src_path = path_join(script_path, '..',  \
+                         'build', src_build_folder, 'bin', 'Release', \
+                         target_arch, app_def.exe_name)
+
+    dst_path = path_join(dst_build_dir, 'bin', _arch_dir(target_arch))
     os.makedirs(dst_path)
     dst_path = path_join(dst_path, app_def.exe_name)
 
@@ -330,6 +354,8 @@ def copy_exe(app_def, target_arch, build_dir):
         print("Could not find " + src_path)
         sys.exit(1)
     shutil.copyfile(src_path, dst_path)
+    if sys.platform == 'linux':
+        _run_cmd(['chmod', '+x', dst_path])
 
 
 def copy_dlls(app_def, target_arch, build_dir, dist_dir=None):
@@ -515,6 +541,25 @@ def _swap_slashes(s):
     """in-place slash swapping"""
     if s == None: return
     return s.replace('/','\\')
+
+
+def build_tgz(app_def, in_dir, output_dir, target_arch):
+    """
+    Build a .tar.gz distributable at output_dir with the intended
+    archive name, copying all of the files in in_dir.
+    """
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        
+    out_filename = _get_installer_filename(app_def.name,
+                                           target_arch,
+                                           app_def.version_str,
+                                           include_bits=True) + '.tar.gz'
+
+    output_path = path_join(output_dir, out_filename)
+
+    cmd = ['tar', 'zcvf', output_path, '-C', in_dir+'/', '.']
+    _run_cmd(cmd)
 
 
 def _copyintotree(src, dst, symlinks=False, ignore=None):
