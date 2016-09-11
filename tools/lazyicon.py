@@ -30,17 +30,13 @@ def do_args():
                                      "only a couple files")
     parser.add_argument('-o', '--output-file',
                         action='store',
+                        required=True,
                         help='.icns file to create')
     parser.add_argument('-i', '--input-dir',
                         action='store',
+                        required=True,
                         help='directory of .pngs')
     args = parser.parse_args()
-    if args.output_file == None:
-        print("missing -o/--output-file", file=sys.stderr)
-        sys.exit(1)
-    if args.input_dir == None:
-        print("missing -i/--input-dir", file=sys.stderr)
-        sys.exit(1)
     if not os.path.isdir(args.input_dir):
         print("%s does not exist" % args.input_dir, file=sys.stderr)
         sys.exit(1)
