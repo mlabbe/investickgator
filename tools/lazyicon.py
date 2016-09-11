@@ -20,27 +20,49 @@ import os.path
 import tempfile
 import argparse
 import subprocess
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 from os.path import join as path_join
 
 RESAMPLE_FILTER = Image.LANCZOS
 
 def do_args():
-    parser = argparse.ArgumentParser(description="produce .icns from "+\
-                                     "only a couple files")
+    parser = argparse.ArgumentParser(description="generate icons and icon art")
     parser.add_argument('-o', '--output-file',
                         action='store',
-                        required=True,
                         help='.icns file to create')
     parser.add_argument('-i', '--input-dir',
                         action='store',
-                        required=True,
                         help='directory of .pngs')
-    args = parser.parse_args()
-    if not os.path.isdir(args.input_dir):
-        print("%s does not exist" % args.input_dir, file=sys.stderr)
-        sys.exit(1)
     
+    parser.add_argument('-g', '--generate-icon',
+                        action='store_true', default=False,
+                        help='generate the icon')
+    parser.add_argument('--gen-fg-color',
+                        help='generated fg color; 4 values comma separated',
+                        default='147,199,246,255')
+    parser.add_argument('--gen-bg-color',
+                        help='generated bg color; 4 values comma separated',
+                        default='18,21,92,255')
+    parser.add_argument('--gen-font',
+                        help='path to ttf font to use when generating icon images')
+    parser.add_argument('--gen-initials',
+                        help='Two initials to put on the icon')
+
+    args = parser.parse_args()
+    if args.input_dir and not os.path.isdir(args.input_dir):
+        parser.error("%s does not exist" % args.input_dir)
+
+    if (not args.generate_icon and not args.input_dir) or \
+       (args.generate_icon and args.input_dir):
+        parser.error("either -g/--generate-icon or -i/--input-dir must be used")
+
+    if args.generate_icon:
+        if not os.path.exists(args.gen_font):
+            parser.error('--gen-font %s not found' % args.gen_font)
+
+        if not _color_from_string(args.gen_bg_color) or not _color_from_string(args.gen_fg_color):
+            parser.error('invalid color.  example of valid color: "255,128,128,255"')
+        
     return args
 
 def _validate_square(im):
@@ -159,11 +181,8 @@ def create_ico(in_dir, size_map, out_path):
 
     im.save(out_path, "ico", sizes=ico_sizes)
     
-
-if __name__ == '__main__':
-    args = do_args()
+def action_build_icon(args):
     print("creating %s from %s" % (args.output_file, args.input_dir))
-
     output_file_ext = os.path.splitext(args.output_file)[1].lower()
 
     if output_file_ext == '.icns':
@@ -197,4 +216,47 @@ if __name__ == '__main__':
         sys.exit(1)
         
     print("wrote " + args.output_file)
+
+def _color_from_string(s):
+    l = (int(x) for x in s.split(','))
+    t = tuple(l)
+    if len(t) != 4:  return None
+    return t
+    
+def action_generate_icon(args):
+    DIMS = [(1024,1024), (32, 32)]
+
+    fg_col = _color_from_string(args.gen_fg_color)
+    bg_col = _color_from_string(args.gen_bg_color)
+    msg = args.gen_initials
+
+    for dims in DIMS:
+        im_icon = Image.new('RGBA', dims, fg_col)
+        
+        font_height = dims[0]*0.625
+        font = ImageFont.truetype(args.gen_font, int(dims[0]*0.625))
+        
+        dc = ImageDraw.Draw(im_icon)
+        w,h = dc.textsize(msg, font=font)
+
+        pos = ((dims[0]/2) - (w/2),
+               (dims[1]/2) - (h/1.5))
+
+        marg = int(dims[0]*0.0625)
+        dc.rectangle([(marg,marg), (dims[0]-marg-1, dims[1]-marg-1)], fill=bg_col)
+        dc.text(pos, msg, font=font, fill=fg_col)
+
+        filename = '%s_%d.png' % (args.output_file, dims[0])
+        im_icon.save(filename, "png")
+        print("saved %s (%dx%d)" % (filename, dims[0], dims[1]))
+
+    
+if __name__ == '__main__':
+    args = do_args()
+    
+    if args.input_dir:
+        action_build_icon(args)
+    elif args.generate_icon:
+        action_generate_icon(args)
+    
     sys.exit(0)
