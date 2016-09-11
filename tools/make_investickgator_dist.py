@@ -22,9 +22,5 @@ if __name__ == '__main__':
                                 main_icon='{app}/investickgator.ico',
                                 support_url_file='{app}/investickgator.url')
 
-    elif options['target_platform'] == 'darwin':
-        iv_def.app_icon_filename = 'investickgator.icns'
-        
     build_all(iv_def, options)
     sys.exit(0)
-        

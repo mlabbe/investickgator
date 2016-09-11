@@ -98,7 +98,7 @@ class AppDefinition:
     exe_name:    name of release executable without extension
     version_str: a string denoting the version
     publisher_name: Company name
-    app_icon_filename: Filename (not path) for Apple bundle .icns files
+    icon_graphics_path: Path to directory containing source png files for icons
     w32icons:    A list of Win32Icons
     """
     def __init__(self):
@@ -107,7 +107,7 @@ class AppDefinition:
         self.exe_name = None
         self.version_str = None
         self.publisher_name = ""
-        self.app_icon_filename = None
+        self.icon_graphics_path = path_join('..', 'build', 'dist', 'icon_src')
         self.w32icons = []
 
     def add_icon(self, w32_icon):
@@ -130,7 +130,21 @@ def build_all(app_def, options):
                       options['target_arch'],
                       build_dir,
                       dist_dir=None)
+
+            # generate an icon with the app's name and stick it in the root
+            # of the built project.
+            # this can be referenced with "{app}/appname.ico" in InnoSetup
+            # files.
+            #
+            # this is done before the insert is copied, so an explicitly
+            # created icon overrides the generated one.
+            icon_path = path_join(build_dir, '%s.ico' % app_def.name.lower())
+            generate_icon(app_def.icon_graphics_path,
+                          options['target_platform'],
+                          icon_path)
+            
             copy_insert(app_def, build_dir)
+
 
             make_innosetup_installer(app_def,
                                      options['target_arch'],
@@ -143,22 +157,20 @@ def build_all(app_def, options):
                                      'build', 'gmake_macosx', 'bin',
                                      'Release', options['target_arch'],
                                      app_def.exe_name)
-            tmp_icon = '/Users/mlabbe/Desktop/icon.icns'
 
-            # fixme: this does not copy dlls
+            icon_path = path_join(tmp_dir, 'icon.icns')
+            generate_icon(app_def.icon_graphics_path, options['target_platform'],
+                          icon_path)
+
+            # fixme: this does not copy dlls and it should
             ab = AppleBundle(app_def.name, exe_src_path, \
-                             tmp_icon, app_def.version_str)
+                             icon_path, app_def.version_str)
             ab.write(tmp_dir)
 
             build_dmg(app_def,
                       tmp_dir,
                       options['output_dir'])
 
-            input("waiting\n"+tmp_dir)
-            # todo:
-            # - icon_src_path does not exist (files, inserts )
-            # - add that and then run and test this
-            # - copy dlls into generated bundle (probably specify DLLs in constructor)
         
 class Win32Icon:
     def __init__(self, name, filename, icon_filename):
@@ -352,6 +364,23 @@ def copy_insert(app_def, build_dir):
     _copyintotree(src_path, dst_path)
     
 
+def generate_icon(icon_graphics_path, target_platform, out_path):
+    """
+    Generate at icon for the target platform, returning the path to a tempfile
+    that is that icon.
+
+    icon_graphics_path: a path containing exclusively png files. See
+    lazyicon.py for more detail.
+
+    If out_path has .icns extension, it will generate a mac
+    icon.  .ico generates windows icon.
+    """
+    script_path = path_join(_get_script_path(), 'lazyicon.py')
+    cmd = [sys.executable, script_path, '-i', icon_graphics_path,
+           '-o', out_path]
+    _run_cmd(cmd)
+    
+    
 
 def make_innosetup_installer(app_def,
                              target_arch,
@@ -454,9 +483,13 @@ def build_dmg(app_def, tmp_dir, output_dmg_dir):
 
     # Compress and make read-only
     if not os.path.exists(output_dmg_dir):
-        os.makedirs(output_dmg_dir)    
+        os.makedirs(output_dmg_dir)
+
+    output_path = path_join(output_dmg_dir, dmg_filename)
+    if os.path.exists(output_path):
+        os.remove(output_path)
     _run_cmd(['hdiutil', 'convert', '-format', 'UDZO', dmg_path,
-              '-o', path_join(output_dmg_dir, dmg_filename)])
+              '-o', output_path])
     
 
 def _get_script_path():    
