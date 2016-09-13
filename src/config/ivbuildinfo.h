@@ -27,3 +27,7 @@ const unsigned int BUILDNUMBER=0;
 // Build timestamp string
 #define BUILD_TIMESTAMP "Tue 01/01/1900  00:00:00.00"
 
+#define VERSION_STRING "1.0.0"
+#define VERSION_MAJOR 1
+#define VERSION_MINOR 0
+#define vERSION_MICRO 1

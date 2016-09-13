@@ -41,7 +41,7 @@ def dist_cli(argv):
                         default=version_def,
                         help='version file (default is %s)' % version_def)
     parser.add_argument('-o', '--output-dir', dest='output_dir',
-                        default='.', required=True,
+                        default='.',
                         help='output dir to place finished archive')
     args = parser.parse_args()
 

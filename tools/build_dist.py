@@ -23,4 +23,6 @@ if __name__ == '__main__':
                                 support_url_file='{app}/investickgator.url')
 
     build_all(iv_def, options)
+
+            
     sys.exit(0)
