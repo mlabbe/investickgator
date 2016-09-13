@@ -6,7 +6,8 @@ Cross-platform joystick diagnostic tool.
 
 release | what's new                          | date
 --------|-------------------------------------|---------
-0.0.1   | initial                             | 
+1.0.0   | initial                             | 1/12/16
+1.0.1   | about with buildinfo                | 9/12/16
 
 ## Building ##
 

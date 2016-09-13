@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glew.h>
+#include "ivbuildinfo.h"
 
 
 #include "ui.h"
@@ -367,6 +368,7 @@ static void sim(bool *quit, struct nk_context *nk, struct joysticks *joys, int w
     nk_input_end(nk);
 
     // imgui
+    static bool show_about = false;
     struct nk_panel layout;
     if (nk_begin(nk, &layout, "Joystick Status", nk_rect((float)window_width-210, 5, 200, 200),
             NK_WINDOW_BORDER|
@@ -374,8 +376,8 @@ static void sim(bool *quit, struct nk_context *nk, struct joysticks *joys, int w
     {        
         nk_layout_row_dynamic(nk, 30, 1);
         nk_label(nk, ftg_va("%d joystick(s) connected", SDL_NumJoysticks()), NK_TEXT_CENTERED);
+#ifdef _WIN32        
         nk_layout_row_dynamic(nk, 30, 1);
-#ifdef _WIN32
         if (g_enable_xinput)
         {
             char label[] = "disable xinput";
@@ -386,7 +388,30 @@ static void sim(bool *quit, struct nk_context *nk, struct joysticks *joys, int w
                 init_joysticks(joys);
             }            
         }
-#endif        
+#endif
+        nk_layout_row_dynamic(nk, 30, 1);
+        if (nk_button_label(nk, "about"))
+        {
+            show_about = true;
+        }
+
+        if (show_about)
+        {
+            struct nk_panel popup;
+            static struct nk_rect s = {-150, 0, 300, 190};
+            if (nk_popup_begin(nk, &popup, NK_POPUP_STATIC, "About", NK_WINDOW_CLOSABLE, s))
+            {
+                nk_layout_row_dynamic(nk, 20, 1);
+                nk_label(nk, ftg_va("InveSTICKgator v%s", VERSION_STRING), NK_TEXT_CENTERED);
+                nk_label(nk, "By Michael Labbe", NK_TEXT_LEFT);
+                nk_label(nk, ftg_va("Built on %s", BUILD_TIMESTAMP), NK_TEXT_LEFT);                
+                nk_label(nk, ftg_va("Built by %s", BUILDERNAME), NK_TEXT_LEFT);
+                nk_label(nk, ftg_va("Rev %s #%d", REVISION, BUILDNUMBER), NK_TEXT_LEFT);
+                nk_popup_end(nk);                
+            }
+            else
+                show_about = false;
+        }
     }
     nk_end(nk);
 
