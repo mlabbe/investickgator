@@ -104,7 +104,7 @@ const unsigned int BUILDNUMBER=%(buildnumber)d;
 #define BUILD_TIMESTAMP "%(build_timestamp)s"
 
 // version bits
-#define VERSION_STR "%(version)s"
+#define VERSION_STRING "%(version)s"
 #define VERSION_MAJOR %(version_major)s
 #define VERSION_MINOR %(version_minor)s
 #define VERSION_MICRO %(version_micro)s
