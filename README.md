@@ -19,9 +19,12 @@ release | what's new                          | date
 
 If you just want to run Investickgator, check the releases tab in Github.  Precompiled versions are available to download.
 
-`cd vendors`
-`python3 compile_all_vendors.py -A x64`
-`cd ../build`
+    # compile dependencies
+    cd vendors
+    python3 compile_all_vendors.py -A x64
+    
+    # choose your build
+    cd ../build
 
 InveSTICKgator uses [Premake5](https://premake.github.io/download.html) generated Makefiles and IDE project files.  The generated project files are checked in under `build/` so you don't have to download and use Premake in most cases.
 
