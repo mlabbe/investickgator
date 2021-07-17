@@ -22,7 +22,7 @@ ifeq ($(config),debug_x64)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g --std=gnu99
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -fno-exceptions -fno-rtti
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lSDL2 -ldl -lpthread -lGLEW -lGL
+  LIBS += `../../vendors/SDL2/sdl2-config --static-libs` -ldl -lpthread -lGLEW -lGL
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -L../../vendors/lib/x64 -m64
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -49,7 +49,7 @@ ifeq ($(config),debug_x86)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -g --std=gnu99
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -fno-exceptions -fno-rtti
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lSDL2 -ldl -lpthread -lGLEW -lGL
+  LIBS += `../../vendors/SDL2/sdl2-config --static-libs` -ldl -lpthread -lGLEW -lGL
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -L../../vendors/lib/x86 -m32
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -76,7 +76,7 @@ ifeq ($(config),release_x64)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 --std=gnu99
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -fno-exceptions -fno-rtti
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lSDL2 -ldl -lpthread -lGLEW -lGL
+  LIBS += `../../vendors/SDL2/sdl2-config --static-libs` -ldl -lpthread -lGLEW -lGL
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -L../../vendors/lib/x64 -m64 -s
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
@@ -103,7 +103,7 @@ ifeq ($(config),release_x86)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -O2 --std=gnu99
   ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CFLAGS) -fno-exceptions -fno-rtti
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lSDL2 -ldl -lpthread -lGLEW -lGL
+  LIBS += `../../vendors/SDL2/sdl2-config --static-libs` -ldl -lpthread -lGLEW -lGL
   LDDEPS +=
   ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -L../../vendors/lib/x86 -m32 -s
   LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
